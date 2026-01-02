@@ -1,0 +1,6 @@
+#+TITLE: iced_colors
+
+* Introduction
+
+This is a simple program, that views all colors of a Theme of iced ([[https://iced.rs/]]). The themes can be switched in the GUI. This is helpful, for selecting colors within an iced application. Practical use in this case was to use the plotters-iced crate and adapt the chart colors to the current theme.
+
