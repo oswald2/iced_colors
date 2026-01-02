@@ -1,6 +1,6 @@
-use iced::widget::{Column, Row, Container, Text, PickList, Space};
-use iced::{Color, Element, Length, Theme};
 use iced::alignment::Horizontal;
+use iced::widget::{Column, Container, PickList, Row, Space, Text};
+use iced::{Color, Element, Length, Theme};
 
 pub fn main() -> iced::Result {
     iced::application(PaletteViewer::default, update, view)
@@ -33,8 +33,12 @@ fn update(state: &mut PaletteViewer, message: Message) {
 
 fn view(state: &PaletteViewer) -> Element<'_, Message> {
     // Create a pick list for theme switching
-    let theme_picker = PickList::new(Theme::ALL, Some(state.theme.clone()), Message::ThemeSelected)
-        .placeholder("Select a theme...");
+    let theme_picker = PickList::new(
+        Theme::ALL,
+        Some(state.theme.clone()),
+        Message::ThemeSelected,
+    )
+    .placeholder("Select a theme...");
 
     // Helper function to create a labeled color swatch
     fn swatch(color: Color, text_color: Color, label: &'_ str) -> Element<'_, Message> {
@@ -65,6 +69,24 @@ fn view(state: &PaletteViewer) -> Element<'_, Message> {
             palette.primary.weak.color,
             palette.primary.weak.text,
             "Primary Weak",
+        ))
+        .spacing(10);
+
+    let secondary_row = Row::new()
+        .push(swatch(
+            palette.secondary.base.color,
+            palette.secondary.base.text,
+            "Secondary Base",
+        ))
+        .push(swatch(
+            palette.secondary.strong.color,
+            palette.secondary.strong.text,
+            "Secondary Strong",
+        ))
+        .push(swatch(
+            palette.secondary.weak.color,
+            palette.secondary.weak.text,
+            "Secondary Weak",
         ))
         .spacing(10);
 
@@ -164,13 +186,13 @@ fn view(state: &PaletteViewer) -> Element<'_, Message> {
             "Background Weakest",
         ));
 
-
     // Combine all rows into a column
     let content = Column::new()
         .push(theme_picker)
         .push(Space::new().height(Length::Fixed(20.0)))
         .push(Text::new("Extended Palette").size(20))
         .push(primary_row)
+        .push(secondary_row)
         .push(success_row)
         .push(danger_row)
         .push(warning_row)
